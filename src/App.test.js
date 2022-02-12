@@ -33,6 +33,10 @@ beforeEach(() => {
 			})
 		if (url === 'http://localhost:5000/tasks' && init.method === 'POST')
 			return Promise.resolve({ json: () => Promise.resolve(MOCK_TASK) })
+		if (init.method === 'DELETE')
+			return Promise.resolve({
+				status: 200,
+			})
 	})
 })
 
@@ -70,6 +74,20 @@ test('task creation', async () => {
 
 	expect(screen.getByText(MOCK_TASK.text)).toBeInTheDocument()
 	expect(screen.getByText(MOCK_TASK.day)).toBeInTheDocument()
+})
+
+test('delete a task', async () => {
+	await act(async () => {
+		render(<App />)
+	})
+	const taskCard = screen.getAllByTestId('task-card')[0]
+
+	expect(taskCard).toBeInTheDocument()
+	const deleteBtn = screen.getAllByTestId('delete-button')[0]
+	fireEvent.click(deleteBtn)
+	await waitFor(() => screen.getByText(MOCK_TASKS[0].text))
+	const deletedTaskText = screen.queryByText(MOCK_TASKS[0].text)
+	expect(deletedTaskText).toBeNull()
 })
 
 test('about link click', async () => {
