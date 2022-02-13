@@ -89,11 +89,3 @@ test('delete a task', async () => {
 	const deletedTaskText = screen.queryByText(MOCK_TASKS[0].text)
 	expect(deletedTaskText).toBeNull()
 })
-
-test('about link click', async () => {
-	await act(async () => {
-		render(<App />)
-	})
-	act(() => screen.getByTestId('about-link').click())
-	expect(screen.getByTestId('version')).toBeInTheDocument()
-})
