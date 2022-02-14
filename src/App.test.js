@@ -63,11 +63,10 @@ test('task creation', async () => {
 	const dateTimeInput = screen.getByTestId('task-day-time-input')
 	const reminderInput = screen.getByTestId('task-reminder-input')
 	const submitButton = screen.getByTestId('add-task-submit-button')
-	act(() => {
-		fireEvent.change(textInput, { target: { value: MOCK_TASK.text } })
-		fireEvent.change(dateTimeInput, { target: { value: MOCK_TASK.day } })
-		if (MOCK_TASK.reminder) fireEvent.click(reminderInput)
-	})
+
+	fireEvent.change(textInput, { target: { value: MOCK_TASK.text } })
+	fireEvent.change(dateTimeInput, { target: { value: MOCK_TASK.day } })
+	if (MOCK_TASK.reminder) fireEvent.click(reminderInput)
 
 	fireEvent.click(submitButton)
 	await waitFor(() => screen.getByText(MOCK_TASK.text))
