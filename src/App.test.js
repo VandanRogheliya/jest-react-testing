@@ -120,3 +120,11 @@ test('delete a task', async () => {
 	// Assertion
 	expect(deletedTaskText).toBeNull()
 })
+
+test('about link click', async () => {
+	await act(async () => {
+		render(<App />)
+	})
+	act(() => screen.getByTestId('about-link').click())
+	expect(screen.getByTestId('version')).toBeInTheDocument()
+})
